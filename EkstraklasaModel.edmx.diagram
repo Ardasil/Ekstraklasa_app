@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cde30eb3465f4fea9584f40ff7e8c4da" Name="Diagram1">
+        <EntityTypeShape EntityType="EkstraklasaModel.BRAMKI" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkstraklasaModel.DRUZYNY" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkstraklasaModel.KARTKI" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkstraklasaModel.PILKARZE" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkstraklasaModel.SEDZIOWIE" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkstraklasaModel.SPOTKANIA" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkstraklasaModel.TRENERZY" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <AssociationConnector Association="EkstraklasaModel.FK_BRAMKI_BRAMKARZ__PILKARZE" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_BRAMKI_BRAMKI_SP_SPOTKANI" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_BRAMKI_STRZELEC__PILKARZE" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_PILKARZE_PILKARZ_D_DRUZYNY" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_SPOTKANI_GOSC_DRUZ_DRUZYNY" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_SPOTKANI_GOSPODARZ_DRUZYNY" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_TRENERZY_TRENER_DR_DRUZYNY" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_KARTKI_KARTKI_PI_PILKARZE" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_KARTKI_KARTKI_SI_SEDZIOWI" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_KARTKI_KARTKI_SP_SPOTKANI" ManuallyRouted="false" />
+        <AssociationConnector Association="EkstraklasaModel.FK_SEDZIOWI_SPOTKANIA_SPOTKANI" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

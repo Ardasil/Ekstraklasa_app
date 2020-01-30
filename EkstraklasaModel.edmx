@@ -1,0 +1,716 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EkstraklasaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BRAMKI">
+          <Key>
+            <PropertyRef Name="Id_Strzelec" />
+          </Key>
+          <Property Name="Id_Strzelec" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_gospo" Type="int" Nullable="false" />
+          <Property Name="Id_gosc" Type="int" Nullable="false" />
+          <Property Name="Id_pilkarze" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PIL_Id_pilkarze" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Czas_bramki" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="DRUZYNY">
+          <Key>
+            <PropertyRef Name="Id_druz" />
+          </Key>
+          <Property Name="Id_druz" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa_druz" Type="varchar" MaxLength="20" />
+          <Property Name="Wlasciciel" Type="varchar" MaxLength="20" />
+          <Property Name="Siedziba" Type="varchar" MaxLength="20" />
+          <Property Name="Ilosc_rozegranych_meczy" Type="int" />
+          <Property Name="Punkty" Type="int" />
+        </EntityType>
+        <EntityType Name="KARTKI">
+          <Key>
+            <PropertyRef Name="Id_kartki" />
+          </Key>
+          <Property Name="Id_kartki" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_pilkarze" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Id_sed" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Id_gospo" Type="int" />
+          <Property Name="Id_gosc" Type="int" />
+          <Property Name="Rodzaj_kartki" Type="int" />
+          <Property Name="Nazwa_sed" Type="varchar" MaxLength="30" />
+          <Property Name="Nazwa_pilk" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="PILKARZE">
+          <Key>
+            <PropertyRef Name="Id_pilkarze" />
+          </Key>
+          <Property Name="Id_pilkarze" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_druz" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Imie_pilk" Type="varchar" MaxLength="20" />
+          <Property Name="Nazwisko_pilk" Type="varchar" MaxLength="20" />
+          <Property Name="Nazwa_druz_pilk" Type="varchar" MaxLength="20" />
+          <Property Name="Wiek_pilk" Type="int" />
+          <Property Name="Ilosc_meczy_pilk" Type="int" />
+          <Property Name="Ilosc_strzelonych_goli_pilk" Type="int" />
+          <Property Name="Ilosc_wpuszczonych_goli_pilk" Type="int" />
+          <Property Name="Specjalizacja" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SEDZIOWIE">
+          <Key>
+            <PropertyRef Name="Id_sed" />
+          </Key>
+          <Property Name="Id_sed" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_gospo" Type="int" />
+          <Property Name="Id_gosc" Type="int" />
+          <Property Name="Imie_sed" Type="varchar" MaxLength="20" />
+          <Property Name="Nazwisko_sed" Type="varchar" MaxLength="20" />
+          <Property Name="Wiek_sed" Type="int" />
+          <Property Name="Ilosc_wydanych_kartek" Type="int" />
+        </EntityType>
+        <EntityType Name="SPOTKANIA">
+          <Key>
+            <PropertyRef Name="Id_gospo" />
+            <PropertyRef Name="Id_gosc" />
+          </Key>
+          <Property Name="Id_gospo" Type="int" Nullable="false" />
+          <Property Name="Id_gosc" Type="int" Nullable="false" />
+          <Property Name="Id_druz" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="DRU_Id_druz" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Data" Type="date" />
+          <Property Name="Godzina" Type="time" Precision="7" />
+          <Property Name="Miejsce" Type="varchar" MaxLength="20" />
+          <Property Name="Wynik_gospo" Type="int" />
+          <Property Name="Wynik_gosc" Type="int" />
+        </EntityType>
+        <EntityType Name="TRENERZY">
+          <Key>
+            <PropertyRef Name="Id_tren" />
+          </Key>
+          <Property Name="Id_tren" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_druz" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Imie_tren" Type="varchar" MaxLength="20" />
+          <Property Name="Nazwisko_tren" Type="varchar" MaxLength="20" />
+          <Property Name="Nazwa_druz_tren" Type="varchar" MaxLength="20" />
+          <Property Name="Wiek_tren" Type="int" />
+        </EntityType>
+        <Association Name="FK_BRAMKI_BRAMKARZ-_PILKARZE">
+          <End Role="PILKARZE" Type="Self.PILKARZE" Multiplicity="1" />
+          <End Role="BRAMKI" Type="Self.BRAMKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PILKARZE">
+              <PropertyRef Name="Id_pilkarze" />
+            </Principal>
+            <Dependent Role="BRAMKI">
+              <PropertyRef Name="PIL_Id_pilkarze" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BRAMKI_BRAMKI-SP_SPOTKANI">
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="1" />
+          <End Role="BRAMKI" Type="Self.BRAMKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPOTKANIA">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Principal>
+            <Dependent Role="BRAMKI">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BRAMKI_STRZELEC-_PILKARZE">
+          <End Role="PILKARZE" Type="Self.PILKARZE" Multiplicity="1" />
+          <End Role="BRAMKI" Type="Self.BRAMKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PILKARZE">
+              <PropertyRef Name="Id_pilkarze" />
+            </Principal>
+            <Dependent Role="BRAMKI">
+              <PropertyRef Name="Id_pilkarze" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KARTKI_KARTKI-PI_PILKARZE">
+          <End Role="PILKARZE" Type="Self.PILKARZE" Multiplicity="1" />
+          <End Role="KARTKI" Type="Self.KARTKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PILKARZE">
+              <PropertyRef Name="Id_pilkarze" />
+            </Principal>
+            <Dependent Role="KARTKI">
+              <PropertyRef Name="Id_pilkarze" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KARTKI_KARTKI-SI_SEDZIOWI">
+          <End Role="SEDZIOWIE" Type="Self.SEDZIOWIE" Multiplicity="0..1" />
+          <End Role="KARTKI" Type="Self.KARTKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SEDZIOWIE">
+              <PropertyRef Name="Id_sed" />
+            </Principal>
+            <Dependent Role="KARTKI">
+              <PropertyRef Name="Id_sed" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KARTKI_KARTKI-SP_SPOTKANI">
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="0..1" />
+          <End Role="KARTKI" Type="Self.KARTKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPOTKANIA">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Principal>
+            <Dependent Role="KARTKI">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PILKARZE_PILKARZ-D_DRUZYNY">
+          <End Role="DRUZYNY" Type="Self.DRUZYNY" Multiplicity="0..1" />
+          <End Role="PILKARZE" Type="Self.PILKARZE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRUZYNY">
+              <PropertyRef Name="Id_druz" />
+            </Principal>
+            <Dependent Role="PILKARZE">
+              <PropertyRef Name="Id_druz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SEDZIOWI_SPOTKANIA_SPOTKANI">
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="0..1" />
+          <End Role="SEDZIOWIE" Type="Self.SEDZIOWIE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPOTKANIA">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Principal>
+            <Dependent Role="SEDZIOWIE">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPOTKANI_GOSC-DRUZ_DRUZYNY">
+          <End Role="DRUZYNY" Type="Self.DRUZYNY" Multiplicity="1" />
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRUZYNY">
+              <PropertyRef Name="Id_druz" />
+            </Principal>
+            <Dependent Role="SPOTKANIA">
+              <PropertyRef Name="DRU_Id_druz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPOTKANI_GOSPODARZ_DRUZYNY">
+          <End Role="DRUZYNY" Type="Self.DRUZYNY" Multiplicity="1" />
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRUZYNY">
+              <PropertyRef Name="Id_druz" />
+            </Principal>
+            <Dependent Role="SPOTKANIA">
+              <PropertyRef Name="Id_druz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRENERZY_TRENER-DR_DRUZYNY">
+          <End Role="DRUZYNY" Type="Self.DRUZYNY" Multiplicity="0..1" />
+          <End Role="TRENERZY" Type="Self.TRENERZY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRUZYNY">
+              <PropertyRef Name="Id_druz" />
+            </Principal>
+            <Dependent Role="TRENERZY">
+              <PropertyRef Name="Id_druz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EkstraklasaModelStoreContainer">
+          <EntitySet Name="BRAMKI" EntityType="Self.BRAMKI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DRUZYNY" EntityType="Self.DRUZYNY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KARTKI" EntityType="Self.KARTKI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PILKARZE" EntityType="Self.PILKARZE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SEDZIOWIE" EntityType="Self.SEDZIOWIE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SPOTKANIA" EntityType="Self.SPOTKANIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRENERZY" EntityType="Self.TRENERZY" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BRAMKI_BRAMKARZ-_PILKARZE" Association="Self.FK_BRAMKI_BRAMKARZ-_PILKARZE">
+            <End Role="PILKARZE" EntitySet="PILKARZE" />
+            <End Role="BRAMKI" EntitySet="BRAMKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BRAMKI_BRAMKI-SP_SPOTKANI" Association="Self.FK_BRAMKI_BRAMKI-SP_SPOTKANI">
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+            <End Role="BRAMKI" EntitySet="BRAMKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BRAMKI_STRZELEC-_PILKARZE" Association="Self.FK_BRAMKI_STRZELEC-_PILKARZE">
+            <End Role="PILKARZE" EntitySet="PILKARZE" />
+            <End Role="BRAMKI" EntitySet="BRAMKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KARTKI_KARTKI-PI_PILKARZE" Association="Self.FK_KARTKI_KARTKI-PI_PILKARZE">
+            <End Role="PILKARZE" EntitySet="PILKARZE" />
+            <End Role="KARTKI" EntitySet="KARTKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KARTKI_KARTKI-SI_SEDZIOWI" Association="Self.FK_KARTKI_KARTKI-SI_SEDZIOWI">
+            <End Role="SEDZIOWIE" EntitySet="SEDZIOWIE" />
+            <End Role="KARTKI" EntitySet="KARTKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KARTKI_KARTKI-SP_SPOTKANI" Association="Self.FK_KARTKI_KARTKI-SP_SPOTKANI">
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+            <End Role="KARTKI" EntitySet="KARTKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PILKARZE_PILKARZ-D_DRUZYNY" Association="Self.FK_PILKARZE_PILKARZ-D_DRUZYNY">
+            <End Role="DRUZYNY" EntitySet="DRUZYNY" />
+            <End Role="PILKARZE" EntitySet="PILKARZE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SEDZIOWI_SPOTKANIA_SPOTKANI" Association="Self.FK_SEDZIOWI_SPOTKANIA_SPOTKANI">
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+            <End Role="SEDZIOWIE" EntitySet="SEDZIOWIE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPOTKANI_GOSC-DRUZ_DRUZYNY" Association="Self.FK_SPOTKANI_GOSC-DRUZ_DRUZYNY">
+            <End Role="DRUZYNY" EntitySet="DRUZYNY" />
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPOTKANI_GOSPODARZ_DRUZYNY" Association="Self.FK_SPOTKANI_GOSPODARZ_DRUZYNY">
+            <End Role="DRUZYNY" EntitySet="DRUZYNY" />
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRENERZY_TRENER-DR_DRUZYNY" Association="Self.FK_TRENERZY_TRENER-DR_DRUZYNY">
+            <End Role="DRUZYNY" EntitySet="DRUZYNY" />
+            <End Role="TRENERZY" EntitySet="TRENERZY" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EkstraklasaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BRAMKI">
+          <Key>
+            <PropertyRef Name="Id_Strzelec" />
+          </Key>
+          <Property Name="Id_Strzelec" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_gospo" Type="Int32" Nullable="false" />
+          <Property Name="Id_gosc" Type="Int32" Nullable="false" />
+          <Property Name="Id_pilkarze" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PIL_Id_pilkarze" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Czas_bramki" Type="Time" Precision="7" />
+          <NavigationProperty Name="PILKARZE" Relationship="Self.FK_BRAMKI_BRAMKARZ__PILKARZE" FromRole="BRAMKI" ToRole="PILKARZE" />
+          <NavigationProperty Name="SPOTKANIA" Relationship="Self.FK_BRAMKI_BRAMKI_SP_SPOTKANI" FromRole="BRAMKI" ToRole="SPOTKANIA" />
+          <NavigationProperty Name="PILKARZE1" Relationship="Self.FK_BRAMKI_STRZELEC__PILKARZE" FromRole="BRAMKI" ToRole="PILKARZE" />
+        </EntityType>
+        <EntityType Name="DRUZYNY">
+          <Key>
+            <PropertyRef Name="Id_druz" />
+          </Key>
+          <Property Name="Id_druz" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa_druz" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Wlasciciel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Siedziba" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Ilosc_rozegranych_meczy" Type="Int32" />
+          <Property Name="Punkty" Type="Int32" />
+          <NavigationProperty Name="PILKARZE" Relationship="Self.FK_PILKARZE_PILKARZ_D_DRUZYNY" FromRole="DRUZYNY" ToRole="PILKARZE" />
+          <NavigationProperty Name="SPOTKANIA" Relationship="Self.FK_SPOTKANI_GOSC_DRUZ_DRUZYNY" FromRole="DRUZYNY" ToRole="SPOTKANIA" />
+          <NavigationProperty Name="SPOTKANIA1" Relationship="Self.FK_SPOTKANI_GOSPODARZ_DRUZYNY" FromRole="DRUZYNY" ToRole="SPOTKANIA" />
+          <NavigationProperty Name="TRENERZY" Relationship="Self.FK_TRENERZY_TRENER_DR_DRUZYNY" FromRole="DRUZYNY" ToRole="TRENERZY" />
+        </EntityType>
+        <EntityType Name="KARTKI">
+          <Key>
+            <PropertyRef Name="Id_kartki" />
+          </Key>
+          <Property Name="Id_kartki" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_pilkarze" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Id_sed" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Id_gospo" Type="Int32" />
+          <Property Name="Id_gosc" Type="Int32" />
+          <Property Name="Rodzaj_kartki" Type="Int32" />
+          <Property Name="Nazwa_sed" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Nazwa_pilk" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PILKARZE" Relationship="Self.FK_KARTKI_KARTKI_PI_PILKARZE" FromRole="KARTKI" ToRole="PILKARZE" />
+          <NavigationProperty Name="SEDZIOWIE" Relationship="Self.FK_KARTKI_KARTKI_SI_SEDZIOWI" FromRole="KARTKI" ToRole="SEDZIOWIE" />
+          <NavigationProperty Name="SPOTKANIA" Relationship="Self.FK_KARTKI_KARTKI_SP_SPOTKANI" FromRole="KARTKI" ToRole="SPOTKANIA" />
+        </EntityType>
+        <EntityType Name="PILKARZE">
+          <Key>
+            <PropertyRef Name="Id_pilkarze" />
+          </Key>
+          <Property Name="Id_pilkarze" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_druz" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Imie_pilk" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nazwisko_pilk" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nazwa_druz_pilk" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Wiek_pilk" Type="Int32" />
+          <Property Name="Ilosc_meczy_pilk" Type="Int32" />
+          <Property Name="Ilosc_strzelonych_goli_pilk" Type="Int32" />
+          <Property Name="Ilosc_wpuszczonych_goli_pilk" Type="Int32" />
+          <Property Name="Specjalizacja" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BRAMKI" Relationship="Self.FK_BRAMKI_BRAMKARZ__PILKARZE" FromRole="PILKARZE" ToRole="BRAMKI" />
+          <NavigationProperty Name="BRAMKI1" Relationship="Self.FK_BRAMKI_STRZELEC__PILKARZE" FromRole="PILKARZE" ToRole="BRAMKI" />
+          <NavigationProperty Name="DRUZYNY" Relationship="Self.FK_PILKARZE_PILKARZ_D_DRUZYNY" FromRole="PILKARZE" ToRole="DRUZYNY" />
+          <NavigationProperty Name="KARTKI" Relationship="Self.FK_KARTKI_KARTKI_PI_PILKARZE" FromRole="PILKARZE" ToRole="KARTKI" />
+        </EntityType>
+        <EntityType Name="SEDZIOWIE">
+          <Key>
+            <PropertyRef Name="Id_sed" />
+          </Key>
+          <Property Name="Id_sed" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_gospo" Type="Int32" />
+          <Property Name="Id_gosc" Type="Int32" />
+          <Property Name="Imie_sed" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nazwisko_sed" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Wiek_sed" Type="Int32" />
+          <Property Name="Ilosc_wydanych_kartek" Type="Int32" />
+          <NavigationProperty Name="KARTKI" Relationship="Self.FK_KARTKI_KARTKI_SI_SEDZIOWI" FromRole="SEDZIOWIE" ToRole="KARTKI" />
+          <NavigationProperty Name="SPOTKANIA" Relationship="Self.FK_SEDZIOWI_SPOTKANIA_SPOTKANI" FromRole="SEDZIOWIE" ToRole="SPOTKANIA" />
+        </EntityType>
+        <EntityType Name="SPOTKANIA">
+          <Key>
+            <PropertyRef Name="Id_gospo" />
+            <PropertyRef Name="Id_gosc" />
+          </Key>
+          <Property Name="Id_gospo" Type="Int32" Nullable="false" />
+          <Property Name="Id_gosc" Type="Int32" Nullable="false" />
+          <Property Name="Id_druz" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="DRU_Id_druz" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Precision="0" />
+          <Property Name="Godzina" Type="Time" Precision="7" />
+          <Property Name="Miejsce" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Wynik_gospo" Type="Int32" />
+          <Property Name="Wynik_gosc" Type="Int32" />
+          <NavigationProperty Name="BRAMKI" Relationship="Self.FK_BRAMKI_BRAMKI_SP_SPOTKANI" FromRole="SPOTKANIA" ToRole="BRAMKI" />
+          <NavigationProperty Name="DRUZYNY" Relationship="Self.FK_SPOTKANI_GOSC_DRUZ_DRUZYNY" FromRole="SPOTKANIA" ToRole="DRUZYNY" />
+          <NavigationProperty Name="DRUZYNY1" Relationship="Self.FK_SPOTKANI_GOSPODARZ_DRUZYNY" FromRole="SPOTKANIA" ToRole="DRUZYNY" />
+          <NavigationProperty Name="KARTKI" Relationship="Self.FK_KARTKI_KARTKI_SP_SPOTKANI" FromRole="SPOTKANIA" ToRole="KARTKI" />
+          <NavigationProperty Name="SEDZIOWIE" Relationship="Self.FK_SEDZIOWI_SPOTKANIA_SPOTKANI" FromRole="SPOTKANIA" ToRole="SEDZIOWIE" />
+        </EntityType>
+        <EntityType Name="TRENERZY">
+          <Key>
+            <PropertyRef Name="Id_tren" />
+          </Key>
+          <Property Name="Id_tren" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_druz" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Imie_tren" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nazwisko_tren" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nazwa_druz_tren" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Wiek_tren" Type="Int32" />
+          <NavigationProperty Name="DRUZYNY" Relationship="Self.FK_TRENERZY_TRENER_DR_DRUZYNY" FromRole="TRENERZY" ToRole="DRUZYNY" />
+        </EntityType>
+        <Association Name="FK_BRAMKI_BRAMKARZ__PILKARZE">
+          <End Role="PILKARZE" Type="Self.PILKARZE" Multiplicity="1" />
+          <End Role="BRAMKI" Type="Self.BRAMKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PILKARZE">
+              <PropertyRef Name="Id_pilkarze" />
+            </Principal>
+            <Dependent Role="BRAMKI">
+              <PropertyRef Name="PIL_Id_pilkarze" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BRAMKI_BRAMKI_SP_SPOTKANI">
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="1" />
+          <End Role="BRAMKI" Type="Self.BRAMKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPOTKANIA">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Principal>
+            <Dependent Role="BRAMKI">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BRAMKI_STRZELEC__PILKARZE">
+          <End Role="PILKARZE" Type="Self.PILKARZE" Multiplicity="1" />
+          <End Role="BRAMKI" Type="Self.BRAMKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PILKARZE">
+              <PropertyRef Name="Id_pilkarze" />
+            </Principal>
+            <Dependent Role="BRAMKI">
+              <PropertyRef Name="Id_pilkarze" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PILKARZE_PILKARZ_D_DRUZYNY">
+          <End Role="DRUZYNY" Type="Self.DRUZYNY" Multiplicity="0..1" />
+          <End Role="PILKARZE" Type="Self.PILKARZE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRUZYNY">
+              <PropertyRef Name="Id_druz" />
+            </Principal>
+            <Dependent Role="PILKARZE">
+              <PropertyRef Name="Id_druz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPOTKANI_GOSC_DRUZ_DRUZYNY">
+          <End Role="DRUZYNY" Type="Self.DRUZYNY" Multiplicity="1" />
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRUZYNY">
+              <PropertyRef Name="Id_druz" />
+            </Principal>
+            <Dependent Role="SPOTKANIA">
+              <PropertyRef Name="DRU_Id_druz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPOTKANI_GOSPODARZ_DRUZYNY">
+          <End Role="DRUZYNY" Type="Self.DRUZYNY" Multiplicity="1" />
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRUZYNY">
+              <PropertyRef Name="Id_druz" />
+            </Principal>
+            <Dependent Role="SPOTKANIA">
+              <PropertyRef Name="Id_druz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRENERZY_TRENER_DR_DRUZYNY">
+          <End Role="DRUZYNY" Type="Self.DRUZYNY" Multiplicity="0..1" />
+          <End Role="TRENERZY" Type="Self.TRENERZY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRUZYNY">
+              <PropertyRef Name="Id_druz" />
+            </Principal>
+            <Dependent Role="TRENERZY">
+              <PropertyRef Name="Id_druz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KARTKI_KARTKI_PI_PILKARZE">
+          <End Role="PILKARZE" Type="Self.PILKARZE" Multiplicity="1" />
+          <End Role="KARTKI" Type="Self.KARTKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PILKARZE">
+              <PropertyRef Name="Id_pilkarze" />
+            </Principal>
+            <Dependent Role="KARTKI">
+              <PropertyRef Name="Id_pilkarze" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KARTKI_KARTKI_SI_SEDZIOWI">
+          <End Role="SEDZIOWIE" Type="Self.SEDZIOWIE" Multiplicity="0..1" />
+          <End Role="KARTKI" Type="Self.KARTKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SEDZIOWIE">
+              <PropertyRef Name="Id_sed" />
+            </Principal>
+            <Dependent Role="KARTKI">
+              <PropertyRef Name="Id_sed" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KARTKI_KARTKI_SP_SPOTKANI">
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="0..1" />
+          <End Role="KARTKI" Type="Self.KARTKI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPOTKANIA">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Principal>
+            <Dependent Role="KARTKI">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SEDZIOWI_SPOTKANIA_SPOTKANI">
+          <End Role="SPOTKANIA" Type="Self.SPOTKANIA" Multiplicity="0..1" />
+          <End Role="SEDZIOWIE" Type="Self.SEDZIOWIE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPOTKANIA">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Principal>
+            <Dependent Role="SEDZIOWIE">
+              <PropertyRef Name="Id_gospo" />
+              <PropertyRef Name="Id_gosc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EkstraklasaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BRAMKI" EntityType="Self.BRAMKI" />
+          <EntitySet Name="DRUZYNY" EntityType="Self.DRUZYNY" />
+          <EntitySet Name="KARTKI" EntityType="Self.KARTKI" />
+          <EntitySet Name="PILKARZE" EntityType="Self.PILKARZE" />
+          <EntitySet Name="SEDZIOWIE" EntityType="Self.SEDZIOWIE" />
+          <EntitySet Name="SPOTKANIA" EntityType="Self.SPOTKANIA" />
+          <EntitySet Name="TRENERZY" EntityType="Self.TRENERZY" />
+          <AssociationSet Name="FK_BRAMKI_BRAMKARZ__PILKARZE" Association="Self.FK_BRAMKI_BRAMKARZ__PILKARZE">
+            <End Role="PILKARZE" EntitySet="PILKARZE" />
+            <End Role="BRAMKI" EntitySet="BRAMKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BRAMKI_BRAMKI_SP_SPOTKANI" Association="Self.FK_BRAMKI_BRAMKI_SP_SPOTKANI">
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+            <End Role="BRAMKI" EntitySet="BRAMKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BRAMKI_STRZELEC__PILKARZE" Association="Self.FK_BRAMKI_STRZELEC__PILKARZE">
+            <End Role="PILKARZE" EntitySet="PILKARZE" />
+            <End Role="BRAMKI" EntitySet="BRAMKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PILKARZE_PILKARZ_D_DRUZYNY" Association="Self.FK_PILKARZE_PILKARZ_D_DRUZYNY">
+            <End Role="DRUZYNY" EntitySet="DRUZYNY" />
+            <End Role="PILKARZE" EntitySet="PILKARZE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPOTKANI_GOSC_DRUZ_DRUZYNY" Association="Self.FK_SPOTKANI_GOSC_DRUZ_DRUZYNY">
+            <End Role="DRUZYNY" EntitySet="DRUZYNY" />
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPOTKANI_GOSPODARZ_DRUZYNY" Association="Self.FK_SPOTKANI_GOSPODARZ_DRUZYNY">
+            <End Role="DRUZYNY" EntitySet="DRUZYNY" />
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRENERZY_TRENER_DR_DRUZYNY" Association="Self.FK_TRENERZY_TRENER_DR_DRUZYNY">
+            <End Role="DRUZYNY" EntitySet="DRUZYNY" />
+            <End Role="TRENERZY" EntitySet="TRENERZY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KARTKI_KARTKI_PI_PILKARZE" Association="Self.FK_KARTKI_KARTKI_PI_PILKARZE">
+            <End Role="PILKARZE" EntitySet="PILKARZE" />
+            <End Role="KARTKI" EntitySet="KARTKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KARTKI_KARTKI_SI_SEDZIOWI" Association="Self.FK_KARTKI_KARTKI_SI_SEDZIOWI">
+            <End Role="SEDZIOWIE" EntitySet="SEDZIOWIE" />
+            <End Role="KARTKI" EntitySet="KARTKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KARTKI_KARTKI_SP_SPOTKANI" Association="Self.FK_KARTKI_KARTKI_SP_SPOTKANI">
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+            <End Role="KARTKI" EntitySet="KARTKI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SEDZIOWI_SPOTKANIA_SPOTKANI" Association="Self.FK_SEDZIOWI_SPOTKANIA_SPOTKANI">
+            <End Role="SPOTKANIA" EntitySet="SPOTKANIA" />
+            <End Role="SEDZIOWIE" EntitySet="SEDZIOWIE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EkstraklasaModelStoreContainer" CdmEntityContainer="EkstraklasaEntities">
+          <EntitySetMapping Name="BRAMKI">
+            <EntityTypeMapping TypeName="EkstraklasaModel.BRAMKI">
+              <MappingFragment StoreEntitySet="BRAMKI">
+                <ScalarProperty Name="Id_Strzelec" ColumnName="Id_Strzelec" />
+                <ScalarProperty Name="Id_gospo" ColumnName="Id_gospo" />
+                <ScalarProperty Name="Id_gosc" ColumnName="Id_gosc" />
+                <ScalarProperty Name="Id_pilkarze" ColumnName="Id_pilkarze" />
+                <ScalarProperty Name="PIL_Id_pilkarze" ColumnName="PIL_Id_pilkarze" />
+                <ScalarProperty Name="Czas_bramki" ColumnName="Czas_bramki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DRUZYNY">
+            <EntityTypeMapping TypeName="EkstraklasaModel.DRUZYNY">
+              <MappingFragment StoreEntitySet="DRUZYNY">
+                <ScalarProperty Name="Id_druz" ColumnName="Id_druz" />
+                <ScalarProperty Name="Nazwa_druz" ColumnName="Nazwa_druz" />
+                <ScalarProperty Name="Wlasciciel" ColumnName="Wlasciciel" />
+                <ScalarProperty Name="Siedziba" ColumnName="Siedziba" />
+                <ScalarProperty Name="Ilosc_rozegranych_meczy" ColumnName="Ilosc_rozegranych_meczy" />
+                <ScalarProperty Name="Punkty" ColumnName="Punkty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KARTKI">
+            <EntityTypeMapping TypeName="EkstraklasaModel.KARTKI">
+              <MappingFragment StoreEntitySet="KARTKI">
+                <ScalarProperty Name="Id_kartki" ColumnName="Id_kartki" />
+                <ScalarProperty Name="Id_pilkarze" ColumnName="Id_pilkarze" />
+                <ScalarProperty Name="Id_sed" ColumnName="Id_sed" />
+                <ScalarProperty Name="Id_gospo" ColumnName="Id_gospo" />
+                <ScalarProperty Name="Id_gosc" ColumnName="Id_gosc" />
+                <ScalarProperty Name="Rodzaj_kartki" ColumnName="Rodzaj_kartki" />
+                <ScalarProperty Name="Nazwa_sed" ColumnName="Nazwa_sed" />
+                <ScalarProperty Name="Nazwa_pilk" ColumnName="Nazwa_pilk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PILKARZE">
+            <EntityTypeMapping TypeName="EkstraklasaModel.PILKARZE">
+              <MappingFragment StoreEntitySet="PILKARZE">
+                <ScalarProperty Name="Id_pilkarze" ColumnName="Id_pilkarze" />
+                <ScalarProperty Name="Id_druz" ColumnName="Id_druz" />
+                <ScalarProperty Name="Imie_pilk" ColumnName="Imie_pilk" />
+                <ScalarProperty Name="Nazwisko_pilk" ColumnName="Nazwisko_pilk" />
+                <ScalarProperty Name="Nazwa_druz_pilk" ColumnName="Nazwa_druz_pilk" />
+                <ScalarProperty Name="Wiek_pilk" ColumnName="Wiek_pilk" />
+                <ScalarProperty Name="Ilosc_meczy_pilk" ColumnName="Ilosc_meczy_pilk" />
+                <ScalarProperty Name="Ilosc_strzelonych_goli_pilk" ColumnName="Ilosc_strzelonych_goli_pilk" />
+                <ScalarProperty Name="Ilosc_wpuszczonych_goli_pilk" ColumnName="Ilosc_wpuszczonych_goli_pilk" />
+                <ScalarProperty Name="Specjalizacja" ColumnName="Specjalizacja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SEDZIOWIE">
+            <EntityTypeMapping TypeName="EkstraklasaModel.SEDZIOWIE">
+              <MappingFragment StoreEntitySet="SEDZIOWIE">
+                <ScalarProperty Name="Id_sed" ColumnName="Id_sed" />
+                <ScalarProperty Name="Id_gospo" ColumnName="Id_gospo" />
+                <ScalarProperty Name="Id_gosc" ColumnName="Id_gosc" />
+                <ScalarProperty Name="Imie_sed" ColumnName="Imie_sed" />
+                <ScalarProperty Name="Nazwisko_sed" ColumnName="Nazwisko_sed" />
+                <ScalarProperty Name="Wiek_sed" ColumnName="Wiek_sed" />
+                <ScalarProperty Name="Ilosc_wydanych_kartek" ColumnName="Ilosc_wydanych_kartek" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SPOTKANIA">
+            <EntityTypeMapping TypeName="EkstraklasaModel.SPOTKANIA">
+              <MappingFragment StoreEntitySet="SPOTKANIA">
+                <ScalarProperty Name="Id_gospo" ColumnName="Id_gospo" />
+                <ScalarProperty Name="Id_gosc" ColumnName="Id_gosc" />
+                <ScalarProperty Name="Id_druz" ColumnName="Id_druz" />
+                <ScalarProperty Name="DRU_Id_druz" ColumnName="DRU_Id_druz" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Godzina" ColumnName="Godzina" />
+                <ScalarProperty Name="Miejsce" ColumnName="Miejsce" />
+                <ScalarProperty Name="Wynik_gospo" ColumnName="Wynik_gospo" />
+                <ScalarProperty Name="Wynik_gosc" ColumnName="Wynik_gosc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRENERZY">
+            <EntityTypeMapping TypeName="EkstraklasaModel.TRENERZY">
+              <MappingFragment StoreEntitySet="TRENERZY">
+                <ScalarProperty Name="Id_tren" ColumnName="Id_tren" />
+                <ScalarProperty Name="Id_druz" ColumnName="Id_druz" />
+                <ScalarProperty Name="Imie_tren" ColumnName="Imie_tren" />
+                <ScalarProperty Name="Nazwisko_tren" ColumnName="Nazwisko_tren" />
+                <ScalarProperty Name="Nazwa_druz_tren" ColumnName="Nazwa_druz_tren" />
+                <ScalarProperty Name="Wiek_tren" ColumnName="Wiek_tren" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
